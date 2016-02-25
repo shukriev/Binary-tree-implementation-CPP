@@ -7,17 +7,18 @@
 //
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 struct BinaryTree {
-    int info;
+    char info[8];
     BinaryTree *leftNode, *rightNode;
     
     BinaryTree(){}
     
-    BinaryTree(int data) {
-        info = data;
+    BinaryTree(char data[8]) {
+        strcpy(info, data);
         leftNode = NULL;
         rightNode = NULL;
     }
@@ -26,7 +27,7 @@ struct BinaryTree {
 
 typedef BinaryTree* BinaryTreePointer;
 
-void insertNode (BinaryTreePointer &bpt, int newItem) {
+void insertNode (BinaryTreePointer &bpt, char newItem[8]) {
     if (bpt == NULL) {
         bpt = new BinaryTree( newItem );
     }
@@ -38,13 +39,13 @@ void insertNode (BinaryTreePointer &bpt, int newItem) {
     }
 }
 
-bool removeNodeByValue(BinaryTreePointer &bpt, int nodeName) {
+bool removeNodeByValue(BinaryTreePointer &bpt, char nodeName[8]) {
     if (bpt == NULL) {
         // Tree is empty, so it certainly doesn't contain item.
         cout << "Tree is empty, so it certainly doesn't contain item.";
         return false;
     }
-    else if (nodeName == bpt->info) {
+    else if (strcmp(nodeName, bpt->info) == 0){
         // Yes, the item has been found in the root node.
         cout << "Yes, the item has been found in the root node.";
         
@@ -136,13 +137,26 @@ int main(int argc, const char * argv[]) {
                 cin >> sub_command;
                 if(sub_command == 1){
                     cout << "Please enter departure plane number: ";
-                    int planeNumber = 0;
+                    char planeNumber[8];
                     cin >> planeNumber;
+
+                    if(strlen(planeNumber) != 7) {
+                        cout << "Plane number should be with 7 chars";
+                        cout << "\n";
+                    }
+                    
                     insertNode(departure, planeNumber);
                 }else if (sub_command == 2){
                     cout << "Please enter landing plane number: ";
-                    int planeNumber = 0;
+                    char planeNumber[8];
                     cin >> planeNumber;
+                    
+                    if(strlen(planeNumber) != 7) {
+                        cout << "Plane number should be with 7 chars";
+                        cout << "\n";
+                        
+                    }
+
                     insertNode(landing, planeNumber);
                 }
                 
@@ -159,8 +173,13 @@ int main(int argc, const char * argv[]) {
             }
             case 4:
                 cout << "Please insert plane number for deletion";
-                int planeNumber = 0;
+                char planeNumber[8];
                 cin >> planeNumber;
+                
+                if(strlen(planeNumber) != 7) {
+                    cout << "Plane number should be with 7 chars";
+                }
+
                 removeNodeByValue(departure, planeNumber);
             break;
                 //            case 5:
